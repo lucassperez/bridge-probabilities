@@ -3,7 +3,7 @@ defmodule Bridge.Hand do
   @suits_string %{0 => "C", 1 => "D", 2 => "H", 3 => "S"}
 
   @doc """
-  () -> List
+  ## () -> List
   Returns a hand, which is a list made of 4 lists of integers representing a
   bridge hand.
   Each card is represented by a number, for instance, 71.
@@ -36,7 +36,7 @@ defmodule Bridge.Hand do
   end
 
   @doc """
-  (List) -> String
+  ## (List) -> String
   Receives a hand (list of integers) and return a string representing the hand,
   with each card in each suit.
   It expects the hand to be ordered by suits in this order:
@@ -59,7 +59,7 @@ defmodule Bridge.Hand do
   end
 
   @doc """
-  (List) -> String
+  ## (List) -> String
   Receives a hand (list of integers) and returns a string representing the cards
   in that suit (ignoring the suit itself).
 
@@ -83,7 +83,7 @@ defmodule Bridge.Hand do
   end
 
   @doc """
-  (List) -> String
+  ## (List) -> String
   Receives a hand (list) and returns a string with the generic shape of the
   hand, ie, disregarding suit order.
   This means that a 4432 does not necessarily means that the hand has 4 spades,
@@ -101,7 +101,7 @@ defmodule Bridge.Hand do
   end
 
   @doc """
-  (List) -> String
+  ## (List) -> String
   Receives a hand (list) and returns the shape of the hand considering suit
   order, ie, spades, hearts, diamonds and clubs.
   This means that a 4432 necessarily means four spades, four hearts, three
@@ -118,7 +118,7 @@ defmodule Bridge.Hand do
   end
 
   @doc """
-  (List) -> Integer
+  ## (List) -> Integer
   Receives a hand (four lists of lists of integers) and returns how many points
   are in the whole hand using A = 4, K = 3, Q = 2 and J = 1
 
@@ -131,7 +131,7 @@ defmodule Bridge.Hand do
   end
 
   @doc """
-  (List) -> Integer
+  ## (List) -> Integer
   Receives a suit (list of integers) and returns how many points are in the suit
   using A = 4, K = 3, Q = 2 and J = 1
 
@@ -150,7 +150,7 @@ defmodule Bridge.Hand do
   end
 
   @doc """
-  (List) -> Integer
+  ## (List) -> Integer
   Returns how many spades a hand have, assuming the hand's suits are ordered
   in the following manner:
   [ [clubs ], [diamonds], [hearts], [spades] ]
@@ -161,7 +161,7 @@ defmodule Bridge.Hand do
   def spades(hand), do: hand |> Enum.at(3) |> length
 
   @doc """
-  (List) -> Integer
+  ## (List) -> Integer
   Returns how many hearts a hand have, assuming the hand's suits are ordered
   in the following manner:
   [ [clubs ], [diamonds], [hearts], [spades] ]
@@ -172,7 +172,7 @@ defmodule Bridge.Hand do
   def hearts(hand), do: hand |> Enum.at(2) |> length
 
   @doc """
-  (List) -> Integer
+  ## (List) -> Integer
   Returns how many diamonds a hand have, assuming the hand's suits are ordered
   in the following manner:
   [ [clubs ], [diamonds], [hearts], [spades] ]
@@ -184,7 +184,7 @@ defmodule Bridge.Hand do
   def diamonds(hand), do: hand |> Enum.at(1) |> length
 
   @doc """
-  (List) -> Integer
+  ## (List) -> Integer
   Returns how many clubs a hand have, assuming the hand's suits are ordered
   in the following manner:
   [ [clubs ], [diamonds], [hearts], [spades] ]
