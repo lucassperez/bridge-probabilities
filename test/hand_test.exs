@@ -129,4 +129,36 @@ defmodule BridgeHandTest do
       assert Bridge.Hand.suit_hcp(suit) === 0
     end
   end
+
+  describe "#spades" do
+    test "it returns how many spades in a hand" do
+      hand = [ [90, 80, 70, 60, 20], [101, 91, 81, 21], [92, 82, 22], [93] ]
+
+      assert Bridge.Hand.spades(hand) === 1
+    end
+  end
+
+  describe "#hearts" do
+    test "it returns how many hearts in a hand" do
+      hand = [ [90, 80, 70, 60, 20], [101, 91, 81, 21], [92, 82, 22], [93] ]
+
+      assert Bridge.Hand.hearts(hand) === 3
+    end
+  end
+
+  describe "#diamonds" do
+    test "it returns how many diamonds in a hand" do
+      hand = [ [90, 80, 70, 60, 20], [101, 91, 81, 21], [92, 82, 22], [93] ]
+
+      assert Bridge.Hand.diamonds(hand) === 4
+    end
+  end
+
+  describe "#clubs" do
+    test "it returns how many clubs in a hand" do
+      hand = [ [90, 80, 70, 60, 20], [101, 91, 81, 21], [92, 82, 22], [93] ]
+
+      assert Bridge.Hand.clubs(hand) === 5
+    end
+  end
 end

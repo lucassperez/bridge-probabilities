@@ -148,4 +148,49 @@ defmodule Bridge.Hand do
       card_value > 10 && rem(card_value, 10) + acc || acc
     end)
   end
+
+  @doc """
+  (List) -> Integer
+  Returns how many spades a hand have, assuming the hand's suits are ordered
+  in the following manner:
+  [ [clubs ], [diamonds], [hearts], [spades] ]
+
+  iex> Bridge.Hand.spades([[90, 80, 70, 60, 30, 20], [101, 91, 81, 21], [92, 82, 22], []])
+  0
+  """
+  def spades(hand), do: hand |> Enum.at(3) |> length
+
+  @doc """
+  (List) -> Integer
+  Returns how many hearts a hand have, assuming the hand's suits are ordered
+  in the following manner:
+  [ [clubs ], [diamonds], [hearts], [spades] ]
+
+  iex> Bridge.Hand.hearts([[90, 80, 70, 60, 30, 20], [101, 91, 81, 21], [92, 82, 22], []])
+  3
+  """
+  def hearts(hand), do: hand |> Enum.at(2) |> length
+
+  @doc """
+  (List) -> Integer
+  Returns how many diamonds a hand have, assuming the hand's suits are ordered
+  in the following manner:
+  [ [clubs ], [diamonds], [hearts], [spades] ]
+
+  iex> Bridge.Hand.diamonds([[90, 80, 70, 60, 30, 20], [101, 91, 81, 21], [92, 82, 22], []])
+  4
+  """
+
+  def diamonds(hand), do: hand |> Enum.at(1) |> length
+
+  @doc """
+  (List) -> Integer
+  Returns how many clubs a hand have, assuming the hand's suits are ordered
+  in the following manner:
+  [ [clubs ], [diamonds], [hearts], [spades] ]
+
+  iex> Bridge.Hand.clubs([[90, 80, 70, 60, 30, 20], [101, 91, 81, 21], [92, 82, 22], []])
+  6
+  """
+  def clubs(hand), do: hand |> Enum.at(0) |> length
 end
