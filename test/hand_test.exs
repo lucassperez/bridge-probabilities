@@ -27,10 +27,10 @@ defmodule BridgeHandTest do
   describe "#to_s" do
     test "it returns the correct string of a valid hand" do
       hand = [
-        [130, 120, 110, 100],
-        [131, 71],
+        [93, 83, 23],
         [142, 132, 102, 22],
-        [93, 83, 23]
+        [131, 71],
+        [130, 120, 110, 100],
       ]
       string = "S: 9 8 2\nH: A K T 2\nD: K 7\nC: K Q J T"
 
@@ -68,10 +68,10 @@ defmodule BridgeHandTest do
   describe "#hcp" do
     test "it returns correct sum of points of a hand with many honours" do
       hand = [
-        [93, 83, 23],
-        [142, 132, 102, 22],
+        [130, 120, 110, 100],
         [131, 71],
-        [130, 120, 110, 100]
+        [142, 132, 102, 22],
+        [93, 83, 23]
       ]
 
       assert Bridge.Hand.hcp(hand) === 16
@@ -79,13 +79,33 @@ defmodule BridgeHandTest do
 
     test "it returns 0 from a hand with no honours" do
       hand = [
-        [93, 83, 23],
-        [92, 82, 22],
+        [90, 80, 20],
         [101, 91, 81, 21],
-        [90, 80, 20]
+        [92, 82, 22],
+        [93, 83, 23]
       ]
 
       assert Bridge.Hand.hcp(hand) === 0
+    end
+  end
+
+  describe "#shape" do
+    test "it returns the generalized shape of bridge hands" do
+      hand1 = [ [90, 80, 20], [101, 91, 81, 21], [92, 82, 22], [93, 83, 23] ]
+      hand2 = [ [70, 60, 30, 20], [91, 81, 71, 41, 31], [], [93, 83, 73, 23] ]
+
+      assert Bridge.Hand.shape(hand1) == "4333"
+      assert Bridge.Hand.shape(hand2) == "5440"
+    end
+  end
+
+  describe "#true_shape" do
+    test "it returns the shape regarding the suit order" do
+      hand1 = [ [90, 80, 20], [101, 91, 81, 21], [92, 82, 22], [93, 83, 23] ]
+      hand2 = [ [70, 60, 30, 20], [91, 81, 71, 41, 31], [], [93, 83, 73, 23] ]
+
+      assert Bridge.Hand.true_shape(hand1) == "3343"
+      assert Bridge.Hand.true_shape(hand2) == "4054"
     end
   end
 

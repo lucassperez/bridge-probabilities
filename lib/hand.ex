@@ -83,6 +83,41 @@ defmodule Bridge.Hand do
   end
 
   @doc """
+  (List) -> String
+  Receives a hand (list) and returns a string with the generic shape of the
+  hand, ie, disregarding suit order.
+  This means that a 4432 does not necessarily means that the hand has 4 spades,
+  4 hearts, 3 diamonds and 2 clubs, it could be any hand with two 4 card suits,
+  a tripleton and a doubleton.
+
+  iex> Bridge.Hand.shape([[80, 70, 20], [71, 41, 31, 21], [142, 92, 32, 22], [143, 133]])
+  "4432"
+  """
+  def shape(hand) do
+    hand
+    |> Enum.map(&length &1)
+    |> Enum.sort(:desc)
+    |> Enum.join
+  end
+
+  @doc """
+  (List) -> String
+  Receives a hand (list) and returns the shape of the hand considering suit
+  order, ie, spades, hearts, diamonds and clubs.
+  This means that a 4432 necessarily means four spades, four hearts, three
+  diamonds and two clubs.
+
+  iex> Bridge.Hand.true_shape([[80, 70, 20], [71, 41, 31, 21], [142, 92, 32, 22], [143, 133]])
+  "2443"
+  """
+  def true_shape(hand) do
+    hand
+    |> Enum.map(&length &1)
+    |> Enum.reverse
+    |> Enum.join
+  end
+
+  @doc """
   (List) -> Integer
   Receives a hand (four lists of lists of integers) and returns how many points
   are in the whole hand using A = 4, K = 3, Q = 2 and J = 1
