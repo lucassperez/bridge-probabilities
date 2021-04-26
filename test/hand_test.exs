@@ -109,6 +109,16 @@ defmodule BridgeHandTest do
     end
   end
 
+  describe "#balanced?" do
+    test "it returns true for a balanced hand and false otherwise" do
+      hand1 = [ [90, 80, 20], [101, 91, 81, 21], [92, 82, 22], [93, 83, 23] ]
+      hand2 = [ [70, 60, 30, 20], [91, 81, 71, 41, 31], [], [93, 83, 73, 23] ]
+
+      assert Bridge.Hand.balanced?(hand1)
+      refute Bridge.Hand.balanced?(hand2)
+    end
+  end
+
   describe "#suit_hcp" do
     test "it returns correct sum of points of hand with many honours",
       %{club_suit: suit} do

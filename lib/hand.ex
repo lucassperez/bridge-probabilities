@@ -118,6 +118,22 @@ defmodule Bridge.Hand do
   end
 
   @doc """
+  ## (List) -> Boolean
+  Receives a hand (list) and returns true if the hand is balanced, false
+  otherwise.
+  A hand is considered balanced if it is one of the three possible shapes:
+  4333, 4432 and 5332.
+  Hands with 5 card major and 5332 pattern are considered balanced.
+
+  iex> Bridge.Hand.balanced?([[143, 133], [142, 92, 32, 22], [71, 41, 31, 21], [80, 70, 20]])
+  true
+
+  iex> Bridge.Hand.balanced?([[133, 103, 73, 23], [], [111, 101, 91, 81, 31], [70, 60, 30, 20]])
+  false
+  """
+  def balanced?(hand), do: shape(hand) in ["4333", "4432", "5332"]
+
+  @doc """
   ## (List) -> Integer
   Receives a hand (four lists of lists of integers) and returns how many points
   are in the whole hand using A = 4, K = 3, Q = 2 and J = 1
