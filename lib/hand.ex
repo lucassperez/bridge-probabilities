@@ -25,6 +25,7 @@ defmodule Bridge.Hand do
     end)
     |> sort_list_of_cards(hand)
     |> Enum.map(&(Enum.sort(&1, :desc)))
+    |> Enum.reverse
   end
 
   defp sort_list_of_cards([], hand), do: hand
@@ -44,16 +45,15 @@ defmodule Bridge.Hand do
   It will always return the suits in the reverse order as mentioned above.
   Also note that the ten will be represented as a T and a void as --.
 
-  iex> Bridge.Hand.to_s([[70, 60, 30, 20], [111, 101, 91, 81, 31], [], [133, 103, 73, 23]])
+  iex> Bridge.Hand.to_s([[133, 103, 73, 23], [], [111, 101, 91, 81, 31], [70, 60, 30, 20]])
   "S: K T 7 2\nH: --\nD: J T 9 8 3\nC: 7 6 3 2"
   """
   def to_s(hand) do
     hand
     |> Enum.with_index
-    |> Enum.reverse
     |> Enum.map(fn ({suit, index}) -> {to_s_suit(suit), index} end)
     |> Enum.reduce("", fn ({suit, index}, acc) ->
-      "#{acc}\n#{@suits_string[index]}: #{suit}"
+      "#{acc}\n#{@suits_string[3-index]}: #{suit}"
     end)
     |> String.trim
   end
@@ -107,13 +107,12 @@ defmodule Bridge.Hand do
   This means that a 4432 necessarily means four spades, four hearts, three
   diamonds and two clubs.
 
-  iex> Bridge.Hand.true_shape([[80, 70, 20], [71, 41, 31, 21], [142, 92, 32, 22], [143, 133]])
+  iex> Bridge.Hand.true_shape([[143, 133], [142, 92, 32, 22], [71, 41, 31, 21], [80, 70, 20]])
   "2443"
   """
   def true_shape(hand) do
     hand
     |> Enum.map(&length &1)
-    |> Enum.reverse
     |> Enum.join
   end
 
@@ -169,44 +168,43 @@ defmodule Bridge.Hand do
   ## (List) -> Integer
   Returns how many spades a hand have, assuming the hand's suits are ordered
   in the following manner:
-  [ [clubs ], [diamonds], [hearts], [spades] ]
+  [ [spades], [hearts], [diamonds], [clubs] ]
 
-  iex> Bridge.Hand.spades([[90, 80, 70, 60, 30, 20], [101, 91, 81, 21], [92, 82, 22], []])
+  iex> Bridge.Hand.spades([[], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 30, 20]])
   0
   """
-  def spades(hand), do: hand |> Enum.at(3) |> length
+  def spades(hand), do: hand |> Enum.at(0) |> length
 
   @doc """
   ## (List) -> Integer
   Returns how many hearts a hand have, assuming the hand's suits are ordered
   in the following manner:
-  [ [clubs ], [diamonds], [hearts], [spades] ]
+  [ [spades], [hearts], [diamonds], [clubs] ]
 
-  iex> Bridge.Hand.hearts([[90, 80, 70, 60, 30, 20], [101, 91, 81, 21], [92, 82, 22], []])
+  iex> Bridge.Hand.hearts([[], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 30, 20]])
   3
   """
-  def hearts(hand), do: hand |> Enum.at(2) |> length
+  def hearts(hand), do: hand |> Enum.at(1) |> length
 
   @doc """
   ## (List) -> Integer
   Returns how many diamonds a hand have, assuming the hand's suits are ordered
   in the following manner:
-  [ [clubs ], [diamonds], [hearts], [spades] ]
+  [ [spades], [hearts], [diamonds], [clubs] ]
 
-  iex> Bridge.Hand.diamonds([[90, 80, 70, 60, 30, 20], [101, 91, 81, 21], [92, 82, 22], []])
+  iex> Bridge.Hand.diamonds([[], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 30, 20]])
   4
   """
-
-  def diamonds(hand), do: hand |> Enum.at(1) |> length
+  def diamonds(hand), do: hand |> Enum.at(2) |> length
 
   @doc """
   ## (List) -> Integer
   Returns how many clubs a hand have, assuming the hand's suits are ordered
   in the following manner:
-  [ [clubs ], [diamonds], [hearts], [spades] ]
+  [ [spades], [hearts], [diamonds], [clubs] ]
 
-  iex> Bridge.Hand.clubs([[90, 80, 70, 60, 30, 20], [101, 91, 81, 21], [92, 82, 22], []])
+  iex> Bridge.Hand.clubs([[], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 30, 20]])
   6
   """
-  def clubs(hand), do: hand |> Enum.at(0) |> length
+  def clubs(hand), do: hand |> Enum.at(3) |> length
 end

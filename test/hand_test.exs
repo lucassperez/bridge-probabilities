@@ -39,10 +39,10 @@ defmodule BridgeHandTest do
 
     test "it returns the correct string of a hand with a void" do
       hand = [
-        [130, 120, 110, 100, 80],
-        [],
+        [93, 83, 33, 23],
         [142, 132, 102, 22],
-        [93, 83, 33, 23]
+        [],
+        [130, 120, 110, 100, 80]
       ]
 
       string = "S: 9 8 3 2\nH: A K T 2\nD: --\nC: K Q J T 8"
@@ -68,10 +68,10 @@ defmodule BridgeHandTest do
   describe "#hcp" do
     test "it returns correct sum of points of a hand with many honours" do
       hand = [
-        [130, 120, 110, 100],
-        [131, 71],
+        [93, 83, 23],
         [142, 132, 102, 22],
-        [93, 83, 23]
+        [131, 71],
+        [130, 120, 110, 100]
       ]
 
       assert Bridge.Hand.hcp(hand) === 16
@@ -79,10 +79,10 @@ defmodule BridgeHandTest do
 
     test "it returns 0 from a hand with no honours" do
       hand = [
-        [90, 80, 20],
-        [101, 91, 81, 21],
+        [93, 83, 23],
         [92, 82, 22],
-        [93, 83, 23]
+        [101, 91, 81, 21],
+        [90, 80, 20]
       ]
 
       assert Bridge.Hand.hcp(hand) === 0
@@ -91,8 +91,8 @@ defmodule BridgeHandTest do
 
   describe "#shape" do
     test "it returns the generalized shape of bridge hands" do
-      hand1 = [ [90, 80, 20], [101, 91, 81, 21], [92, 82, 22], [93, 83, 23] ]
-      hand2 = [ [70, 60, 30, 20], [91, 81, 71, 41, 31], [], [93, 83, 73, 23] ]
+      hand1 = [ [93, 83, 23], [92, 82, 22], [101, 91, 81, 21], [90, 80, 20] ]
+      hand2 = [ [93, 83, 73, 23], [], [91, 81, 71, 41, 31], [70, 60, 30, 20] ]
 
       assert Bridge.Hand.shape(hand1) == "4333"
       assert Bridge.Hand.shape(hand2) == "5440"
@@ -101,8 +101,8 @@ defmodule BridgeHandTest do
 
   describe "#true_shape" do
     test "it returns the shape regarding the suit order" do
-      hand1 = [ [90, 80, 20], [101, 91, 81, 21], [92, 82, 22], [93, 83, 23] ]
-      hand2 = [ [70, 60, 30, 20], [91, 81, 71, 41, 31], [], [93, 83, 73, 23] ]
+      hand1 = [ [93, 83, 23], [92, 82, 22], [101, 91, 81, 21], [90, 80, 20] ]
+      hand2 = [ [93, 83, 73, 23], [], [91, 81, 71, 41, 31], [70, 60, 30, 20] ]
 
       assert Bridge.Hand.true_shape(hand1) == "3343"
       assert Bridge.Hand.true_shape(hand2) == "4054"
@@ -111,8 +111,8 @@ defmodule BridgeHandTest do
 
   describe "#balanced?" do
     test "it returns true for a balanced hand and false otherwise" do
-      hand1 = [ [90, 80, 20], [101, 91, 81, 21], [92, 82, 22], [93, 83, 23] ]
-      hand2 = [ [70, 60, 30, 20], [91, 81, 71, 41, 31], [], [93, 83, 73, 23] ]
+      hand1 = [ [93, 83, 23], [92, 82, 22], [101, 91, 81, 21], [90, 80, 20] ]
+      hand2 = [ [93, 83, 73, 23], [], [91, 81, 71, 41, 31], [70, 60, 30, 20] ]
 
       assert Bridge.Hand.balanced?(hand1)
       refute Bridge.Hand.balanced?(hand2)
@@ -142,7 +142,7 @@ defmodule BridgeHandTest do
 
   describe "#spades" do
     test "it returns how many spades in a hand" do
-      hand = [ [90, 80, 70, 60, 20], [101, 91, 81, 21], [92, 82, 22], [93] ]
+      hand = [ [93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20] ]
 
       assert Bridge.Hand.spades(hand) === 1
     end
@@ -150,7 +150,7 @@ defmodule BridgeHandTest do
 
   describe "#hearts" do
     test "it returns how many hearts in a hand" do
-      hand = [ [90, 80, 70, 60, 20], [101, 91, 81, 21], [92, 82, 22], [93] ]
+      hand = [ [93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20] ]
 
       assert Bridge.Hand.hearts(hand) === 3
     end
@@ -158,7 +158,7 @@ defmodule BridgeHandTest do
 
   describe "#diamonds" do
     test "it returns how many diamonds in a hand" do
-      hand = [ [90, 80, 70, 60, 20], [101, 91, 81, 21], [92, 82, 22], [93] ]
+      hand = [ [93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20] ]
 
       assert Bridge.Hand.diamonds(hand) === 4
     end
@@ -166,7 +166,7 @@ defmodule BridgeHandTest do
 
   describe "#clubs" do
     test "it returns how many clubs in a hand" do
-      hand = [ [90, 80, 70, 60, 20], [101, 91, 81, 21], [92, 82, 22], [93] ]
+      hand = [ [93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20] ]
 
       assert Bridge.Hand.clubs(hand) === 5
     end
