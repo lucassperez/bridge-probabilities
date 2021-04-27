@@ -2,13 +2,6 @@ defmodule BridgeHandTest do
   use ExUnit.Case
   doctest Bridge.Hand
 
-  setup do
-    {:ok, %{
-      club_suit: [140, 130, 110, 90, 70, 20], #AKJ972
-      diamond_suit: [91, 71, 31] #973
-    }}
-  end
-
   describe "#generate_random" do
     test "it returns a valid hand one hundred times" do
       Enum.map(1..100, fn _ ->
@@ -48,20 +41,6 @@ defmodule BridgeHandTest do
       string = "S: 9 8 3 2\nH: A K T 2\nD: --\nC: K Q J T 8"
 
       assert Bridge.Hand.to_s(hand) == string
-    end
-  end
-
-  describe "#to_s_suit" do
-    test "it returns the correct string of a suit with cards" do
-      suit = [143, 103, 93, 83, 23]
-
-      assert Bridge.Hand.to_s_suit(suit) == "A T 9 8 2"
-    end
-
-    test "it returns the correct string of a suit with no cards" do
-      suit = []
-
-      assert Bridge.Hand.to_s_suit(suit) == "--"
     end
   end
 
@@ -116,27 +95,6 @@ defmodule BridgeHandTest do
 
       assert Bridge.Hand.balanced?(hand1)
       refute Bridge.Hand.balanced?(hand2)
-    end
-  end
-
-  describe "#suit_hcp" do
-    test "it returns correct sum of points of hand with many honours",
-      %{club_suit: suit} do
-      # suit = [140, 130, 110, 90, 70, 20]
-
-      assert Bridge.Hand.suit_hcp(suit) === 8
-    end
-
-    test "it returns 0 from suit without honours" do
-      suit = [91, 71, 31]
-
-      assert Bridge.Hand.suit_hcp(suit) === 0
-    end
-
-    test "it returns 0 from suit without any cards" do
-      suit = []
-
-      assert Bridge.Hand.suit_hcp(suit) === 0
     end
   end
 

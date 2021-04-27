@@ -1,5 +1,6 @@
 defmodule Bridge.Hand do
-  @honours_string %{14 => "A", 13 => "K", 12 => "Q", 11 => "J", 10 => "T"}
+  alias Bridge.{Suit}
+
   @suits_string %{0 => "C", 1 => "D", 2 => "H", 3 => "S"}
 
   @doc """
@@ -51,35 +52,11 @@ defmodule Bridge.Hand do
   def to_s(hand) do
     hand
     |> Enum.with_index
-    |> Enum.map(fn ({suit, index}) -> {to_s_suit(suit), index} end)
+    |> Enum.map(fn ({suit, index}) -> {Suit.to_s(suit), index} end)
     |> Enum.reduce("", fn ({suit, index}, acc) ->
       "#{acc}\n#{@suits_string[3-index]}: #{suit}"
     end)
     |> String.trim
-  end
-
-  @doc """
-  ## (List) -> String
-  Receives a hand (list of integers) and returns a string representing the cards
-  in that suit (ignoring the suit itself).
-
-  iex> Bridge.Hand.to_s_suit([130, 110, 100, 80, 20])
-  "K J T 8 2"
-
-  iex> Bridge.Hand.to_s_suit([])
-  "--"
-  """
-  def to_s_suit([]), do: "--"
-  def to_s_suit(suit), do: to_s_suit(suit, "")
-  defp to_s_suit([], acc), do: acc
-  defp to_s_suit([head | tail], ""),
-    do: to_s_suit(tail, "#{get_card_string(head)}")
-  defp to_s_suit([head | tail], acc),
-    do: to_s_suit(tail, "#{acc} #{get_card_string(head)}")
-
-  defp get_card_string(card) do
-    value = div(card, 10)
-    @honours_string[value] || value
   end
 
   @doc """
@@ -142,26 +119,7 @@ defmodule Bridge.Hand do
   """
   def hcp(hand) do
     hand
-    |> Enum.reduce(0, fn (suit, acc) -> suit_hcp(suit) + acc end)
-  end
-
-  @doc """
-  ## (List) -> Integer
-  Receives a suit (list of integers) and returns how many points are in the suit
-  using A = 4, K = 3, Q = 2 and J = 1
-
-  iex> Bridge.Hand.suit_hcp([141, 131, 41])
-  7
-
-  iex> Bridge.Hand.suit_hcp([])
-  0
-  """
-  def suit_hcp(suit) do
-    suit
-    |> Enum.reduce(0, fn (card, acc) ->
-      card_value = div(card, 10)
-      card_value > 10 && rem(card_value, 10) + acc || acc
-    end)
+    |> Enum.reduce(0, fn (suit, acc) -> Suit.hcp(suit) + acc end)
   end
 
   @doc """
