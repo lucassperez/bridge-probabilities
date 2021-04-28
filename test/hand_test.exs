@@ -70,8 +70,8 @@ defmodule BridgeHandTest do
 
   describe "#shape" do
     test "it returns the generalized shape of bridge hands" do
-      hand1 = [ [93, 83, 23], [92, 82, 22], [101, 91, 81, 21], [90, 80, 20] ]
-      hand2 = [ [93, 83, 73, 23], [], [91, 81, 71, 41, 31], [70, 60, 30, 20] ]
+      hand1 = [[93, 83, 23], [92, 82, 22], [101, 91, 81, 21], [90, 80, 20]]
+      hand2 = [[93, 83, 73, 23], [], [91, 81, 71, 41, 31], [70, 60, 30, 20]]
 
       assert Bridge.Hand.shape(hand1) == "4333"
       assert Bridge.Hand.shape(hand2) == "5440"
@@ -80,8 +80,8 @@ defmodule BridgeHandTest do
 
   describe "#true_shape" do
     test "it returns the shape regarding the suit order" do
-      hand1 = [ [93, 83, 23], [92, 82, 22], [101, 91, 81, 21], [90, 80, 20] ]
-      hand2 = [ [93, 83, 73, 23], [], [91, 81, 71, 41, 31], [70, 60, 30, 20] ]
+      hand1 = [[93, 83, 23], [92, 82, 22], [101, 91, 81, 21], [90, 80, 20]]
+      hand2 = [[93, 83, 73, 23], [], [91, 81, 71, 41, 31], [70, 60, 30, 20]]
 
       assert Bridge.Hand.true_shape(hand1) == "3343"
       assert Bridge.Hand.true_shape(hand2) == "4054"
@@ -90,8 +90,8 @@ defmodule BridgeHandTest do
 
   describe "#balanced?" do
     test "it returns true for a balanced hand and false otherwise" do
-      hand1 = [ [93, 83, 23], [92, 82, 22], [101, 91, 81, 21], [90, 80, 20] ]
-      hand2 = [ [93, 83, 73, 23], [], [91, 81, 71, 41, 31], [70, 60, 30, 20] ]
+      hand1 = [[93, 83, 23], [92, 82, 22], [101, 91, 81, 21], [90, 80, 20]]
+      hand2 = [[93, 83, 73, 23], [], [91, 81, 71, 41, 31], [70, 60, 30, 20]]
 
       assert Bridge.Hand.balanced?(hand1)
       refute Bridge.Hand.balanced?(hand2)
@@ -100,7 +100,7 @@ defmodule BridgeHandTest do
 
   describe "#spades" do
     test "it returns how many spades in a hand" do
-      hand = [ [93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20] ]
+      hand = [[93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20]]
 
       assert Bridge.Hand.spades(hand) === 1
     end
@@ -108,7 +108,7 @@ defmodule BridgeHandTest do
 
   describe "#hearts" do
     test "it returns how many hearts in a hand" do
-      hand = [ [93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20] ]
+      hand = [[93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20]]
 
       assert Bridge.Hand.hearts(hand) === 3
     end
@@ -116,7 +116,7 @@ defmodule BridgeHandTest do
 
   describe "#diamonds" do
     test "it returns how many diamonds in a hand" do
-      hand = [ [93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20] ]
+      hand = [[93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20]]
 
       assert Bridge.Hand.diamonds(hand) === 4
     end
@@ -124,7 +124,7 @@ defmodule BridgeHandTest do
 
   describe "#clubs" do
     test "it returns how many clubs in a hand" do
-      hand = [ [93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20] ]
+      hand = [[93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20]]
 
       assert Bridge.Hand.clubs(hand) === 5
     end
