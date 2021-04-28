@@ -1,4 +1,9 @@
 defmodule Bridge.App do
+  @moduledoc """
+  This module is responsible to start the application and control some of the
+  user input and output flow.
+  """
+
   @calculate 1
   @exit 0
 
