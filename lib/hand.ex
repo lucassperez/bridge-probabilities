@@ -1,5 +1,11 @@
 defmodule Bridge.Hand do
-  alias Bridge.{Suit}
+  @moduledoc """
+  This module provides many functions that manipulate, generate or calculate
+  things related to a whole bridge hand, and not the suits separately.
+  See Bridge.Suit for comparison.
+  """
+
+  alias Bridge.Suit
 
   @suits_string %{0 => "C", 1 => "D", 2 => "H", 3 => "S"}
 

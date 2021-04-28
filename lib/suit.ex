@@ -1,4 +1,10 @@
 defmodule Bridge.Suit do
+  @moduledoc """
+  This module provides many functions that manipulate and calculate things
+  related to a single suit isolated.
+  It is mostly used as an auxiliary module for the Bridge.Hand module.
+  """
+
   @honours_string %{14 => "A", 13 => "K", 12 => "Q", 11 => "J", 10 => "T"}
 
   @doc """
