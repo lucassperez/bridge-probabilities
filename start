@@ -1,1 +1,1 @@
-mix run lib/start.exs
+mix run start.exs
