@@ -98,6 +98,16 @@ defmodule BridgeHandTest do
     end
   end
 
+  describe "#unbalanced?" do
+    test "it returns true for an unbalanced hand and false otherwise" do
+      hand1 = [[93, 83, 23], [92, 82, 22], [101, 91, 81, 21], [90, 80, 20]]
+      hand2 = [[93, 83, 73, 23], [], [91, 81, 71, 41, 31], [70, 60, 30, 20]]
+
+      refute Bridge.Hand.unbalanced?(hand1)
+      assert Bridge.Hand.unbalanced?(hand2)
+    end
+  end
+
   describe "#spades" do
     test "it returns how many spades in a hand" do
       hand = [[93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20]]

@@ -21,9 +21,8 @@ defmodule Bridge.Hand do
   Which means that 71 is the seven of diamonds, and 143 would be the ace of
   spades and so on.
   """
-  def generate_random, do: generate_random([[], [], [], []])
-
-  defp generate_random([[], [], [], []] = hand) do
+  def generate_random do
+    hand = [[], [], [], []]
     _list_of_cards = Enum.take_random(0..51, 13)
     |> Enum.map(fn number ->
       suit = div(number, 13)
@@ -116,6 +115,17 @@ defmodule Bridge.Hand do
   def balanced?(hand), do: shape(hand) in ["4333", "4432", "5332"]
 
   @doc """
+  ## (List) -> Boolean
+  Receives a hand (list) and returns true if the hand is unbalanced, false
+  otherwise.
+  See Bridge.Hand.balanced? for more details.
+
+  iex> Bridge.Hand.unbalanced?([[143, 133], [142, 92, 32, 22], [71, 41, 31, 21], [80, 70, 20]])
+  false
+  """
+  def unbalanced?(hand), do: !balanced?(hand)
+
+  @doc """
   ## (List) -> Integer
   Receives a hand (four lists of lists of integers) and returns how many points
   are in the whole hand using A = 4, K = 3, Q = 2 and J = 1
@@ -127,6 +137,9 @@ defmodule Bridge.Hand do
     hand
     |> Enum.reduce(0, fn (suit, acc) -> Suit.hcp(suit) + acc end)
   end
+
+  def less_than_or_equal_to_hcp(hand, value), do: hcp(hand) <= value
+  def greater_than_or_equal_to_hcp(hand, value), do: value <= hcp(hand)
 
   @doc """
   ## (List) -> Integer
