@@ -22,9 +22,9 @@ defmodule Bridge.App do
     IO.gets("»» ") |> String.trim |> menu()
   end
 
-  def menu("0"), do: IO.puts("\n\e[91;1mThanks for using my app! (:\e[0m\n")
+  def menu("0"), do: IO.puts("\n\e[91;1mThank you for using my app! (:\e[0m\n")
 
-  def menu("1"), do: Bridge.Calculate.start() && menu()
+  def menu("1"), do: Bridge.Calculate.Options.question() && menu()
 
   def menu(_), do: invalid_option(&menu/0)
 

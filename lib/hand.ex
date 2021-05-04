@@ -138,6 +138,9 @@ defmodule Bridge.Hand do
     |> Enum.reduce(0, fn (suit, acc) -> Suit.hcp(suit) + acc end)
   end
 
+  def less_than_or_equal_to_hcp(hand, value), do: hcp(hand) <= value
+  def greater_than_or_equal_to_hcp(hand, value), do: value <= hcp(hand)
+
   @doc """
   ## (List) -> Integer
   Returns how many spades a hand have, assuming the hand's suits are ordered
