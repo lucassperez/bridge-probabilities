@@ -21,9 +21,8 @@ defmodule Bridge.Hand do
   Which means that 71 is the seven of diamonds, and 143 would be the ace of
   spades and so on.
   """
-  def generate_random, do: generate_random([[], [], [], []])
-
-  defp generate_random([[], [], [], []] = hand) do
+  def generate_random do
+    hand = [[], [], [], []]
     _list_of_cards = Enum.take_random(0..51, 13)
     |> Enum.map(fn number ->
       suit = div(number, 13)
