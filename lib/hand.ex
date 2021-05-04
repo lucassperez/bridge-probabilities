@@ -116,6 +116,17 @@ defmodule Bridge.Hand do
   def balanced?(hand), do: shape(hand) in ["4333", "4432", "5332"]
 
   @doc """
+  ## (List) -> Boolean
+  Receives a hand (list) and returns true if the hand is unbalanced, false
+  otherwise.
+  See Bridge.Hand.balanced? for more details.
+
+  iex> Bridge.Hand.unbalanced?([[143, 133], [142, 92, 32, 22], [71, 41, 31, 21], [80, 70, 20]])
+  false
+  """
+  def unbalanced?(hand), do: !balanced?(hand)
+
+  @doc """
   ## (List) -> Integer
   Receives a hand (four lists of lists of integers) and returns how many points
   are in the whole hand using A = 4, K = 3, Q = 2 and J = 1
