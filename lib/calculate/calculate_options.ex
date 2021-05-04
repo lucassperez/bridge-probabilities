@@ -7,11 +7,7 @@ defmodule Bridge.Calculate.Options do
 
   alias Bridge.{App, Hand}
 
-  def start do
-    question()
-  end
-
-  defp question do
+  def question do
     IO.gets("\n\e[1mBalanced?\e[0m [y/n/(i)rrelevant] ")
     |> String.trim
     |> fn input ->
