@@ -4,7 +4,7 @@ defmodule Bridge.App do
   user input and output flow.
   """
 
-  @calculate 1
+  @generic 1
   @exit 0
 
   def start do
@@ -17,16 +17,17 @@ defmodule Bridge.App do
 
   def menu do
     IO.puts("\n\e[0mType a number for each of the following options:")
-    IO.puts("\e[32m[#{@calculate}] Calculate with options")
+    IO.puts("\e[32m[#{@generic}] Calculate with generic options")
     IO.puts("\e[93m[#{@exit}] Exit\e[0m\n")
     IO.gets("»» ") |> String.trim |> menu()
   end
 
   def menu("0"), do: IO.puts("\n\e[91;1mThank you for using my app! (:\e[0m\n")
 
-  def menu("1"), do: Bridge.Calculate.Options.question() && menu()
+  def menu("1"), do: Bridge.Calculate.Generic.start() && menu()
 
   def menu(_), do: invalid_option(&menu/0)
 
-  def invalid_option(function), do: IO.puts("\nInvalid option") && function.()
+  def invalid_option(function),
+    do: IO.puts("\e[93mInvalid option\e[0m") && function.()
 end
