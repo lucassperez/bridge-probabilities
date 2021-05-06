@@ -28,7 +28,7 @@ defmodule Bridge.Calculate.Generic do
 
   defp question(args) when length(args) == 1 do
     input = IO.gets("\e[1mAt least how many points\e[0m (hcp)? ")
-    hcp = (input == "\n") && 0 || input_to_integer(input)
+    hcp = (input == "\n") && 0 || Calculate.input_to_integer(input)
 
     if hcp in (0..40) do
       question([{:min, &Hand.hcp/1, hcp} | args])
@@ -40,33 +40,18 @@ defmodule Bridge.Calculate.Generic do
 
   defp question(args) when length(args) == 2 do
     input = IO.gets("\e[1mAt most how many points\e[0m (hcp)? ")
-    hcp = (input == "\n") && 40 || input_to_integer(input)
+    hcp = (input == "\n") && 40 || Calculate.input_to_integer(input)
 
     minimun_hcp = elem(hd(args), 2)
     if hcp in (minimun_hcp..40) do
-      question([{:max, &Hand.hcp/1, hcp} | args])
+      finish([{:max, &Hand.hcp/1, hcp} | args])
     else
       IO.puts("\e[93mInvalid amount of hcp\e[0m")
       question(args)
     end
   end
 
-  defp question(args) when length(args) == 3 do
-    _n = IO.gets("Select n (defaults to 1000): ")
-    |> String.trim
-    |> to_integer_or_default
-    |> Calculate.calculate(0, 0, args)
+  defp finish(args) do
+    Calculate.get_n(args)
   end
-
-  defp to_integer_or_default(s, default \\ 1000) do
-    input_to_integer(s) || default
-  end
-
-  # FIXME: This function may return either a number or false,
-  # is this a good idea?
-  defp input_to_integer(s) do
-    string = String.trim(s)
-    String.match?(string, ~r/^\d+$/) && String.to_integer(string)
-  end
-
 end

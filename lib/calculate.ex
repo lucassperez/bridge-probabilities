@@ -25,12 +25,20 @@ defmodule Bridge.Calculate do
       calculate(n, verified, total + 1, args, hand)
   end
 
+  def get_n(args) do
+    _n = IO.gets("Select n (defaults to 1000): ")
+    |> String.trim
+    |> to_integer_or_default
+    |> calculate(0, 0, args)
+  end
+
   defp verify_hand(args, hand) do
     args
     |> Enum.reduce(true, fn (action, acc) ->
       acc and case action do
         {:min, func, value} -> func.(hand) >= value
         {:max, func, value} -> func.(hand) <= value
+        {:range, func, min, max} -> func.(hand) in (min..max)
         {:simple, func} -> func.(hand)
         {:ignore} -> true
       end
@@ -39,4 +47,15 @@ defmodule Bridge.Calculate do
 
   defp percentage(verified, total) when verified == 0 or total == 0, do: 0
   defp percentage(verified, total), do: verified / total * 100 |> Float.round(3)
+
+  defp to_integer_or_default(s, default \\ 1000) do
+    input_to_integer(s) || default
+  end
+
+  # FIXME: This function may return either a number or false,
+  # is this a good idea?
+  def input_to_integer(s) do
+    string = String.trim(s)
+    String.match?(string, ~r/^\d+$/) && String.to_integer(string)
+  end
 end
