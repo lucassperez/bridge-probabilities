@@ -5,9 +5,9 @@ defmodule Bridge.Calculate.Generic do
   module.
   """
 
-  alias Bridge.{App, Calculate, Hand}
+  alias Bridge.{App, Calculate, Hand, Calculate.Helpers}
 
-  def start() do
+  def start do
     IO.puts ""
     question()
   end
@@ -28,7 +28,7 @@ defmodule Bridge.Calculate.Generic do
 
   defp question(args) when length(args) == 1 do
     input = IO.gets("\e[1mAt least how many points\e[0m (hcp)? ")
-    hcp = (input == "\n") && 0 || Calculate.input_to_integer(input)
+    hcp = (input == "\n") && 0 || Helpers.input_to_integer(input)
 
     if hcp in (0..40) do
       question([{:min, &Hand.hcp/1, hcp} | args])
@@ -40,7 +40,7 @@ defmodule Bridge.Calculate.Generic do
 
   defp question(args) when length(args) == 2 do
     input = IO.gets("\e[1mAt most how many points\e[0m (hcp)? ")
-    hcp = (input == "\n") && 40 || Calculate.input_to_integer(input)
+    hcp = (input == "\n") && 40 || Helpers.input_to_integer(input)
 
     minimun_hcp = elem(hd(args), 2)
     if hcp in (minimun_hcp..40) do
