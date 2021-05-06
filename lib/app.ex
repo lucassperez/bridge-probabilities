@@ -31,6 +31,6 @@ defmodule Bridge.App do
 
   def invalid_option(function),
     do: IO.puts("\e[93mInvalid option\e[0m") && function.()
-  def invalid_option(function, var),
-    do: IO.puts("\e[93mInvalid option\e[0m") && function.(var)
+  def invalid_option(function, v1, v2),
+    do: IO.puts("\e[93mInvalid option\e[0m") && function.(v1, v2)
 end

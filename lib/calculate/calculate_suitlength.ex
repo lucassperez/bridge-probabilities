@@ -21,7 +21,7 @@ defmodule Bridge.Calculate.SuitLength do
   defp question do
     ~w[Spades Hearts Diamonds Clubs]
     |> Enum.map(fn suit ->
-      {min, max} = build_range(suit, 0, 13)
+      {min, max} = build_range(suit, :suit)
       {:range, @suit_function[suit], min, max}
     end)
     |> fn args ->
@@ -32,7 +32,7 @@ defmodule Bridge.Calculate.SuitLength do
   end
 
   defp question(args) when length(args) == 4 do
-    {min, max} = build_range("High Card Points\e[0m (hcp)", 0, 40)
+    {min, max} = build_range("High Card Points\e[0m (hcp)", :hcp)
     finish([{:range, &Hand.hcp/1, min, max} | args])
   end
 
@@ -40,26 +40,39 @@ defmodule Bridge.Calculate.SuitLength do
     Calculate.get_n(args)
   end
 
-  defp build_range(string, low \\ 0, high\\ 40)
-  defp build_range(string, low, high) do
-    IO.puts("\e[1;34m#{string}\e[0m")
+  defp build_range(message, :hcp), do: build_range(message, 0, 40, :hcp)
+  defp build_range(message, :suit), do: build_range(message, 0, 13, :suit)
+  defp build_range(message, low, high, type) do
+    IO.puts("\e[1;34m#{message}\e[0m")
     min = IO.gets("  At least: ")
     |> String.trim
-    |> verify_range(low, high, string, :lower)
+    |> fn input ->
+      case String.downcase(input) do
+        "" -> low
+        _ -> Calculate.input_to_integer(input)
+      end
+    end.()
 
     max = IO.gets("  At most: ")
     |> String.trim
-    |> verify_range(min, high, string, :higher)
+    |> fn input ->
+      case String.downcase(input) do
+        "" -> high
+        _ -> Calculate.input_to_integer(input)
+      end
+    end.()
 
-    {min, max}
+    if validate_range(min, max, low, high) do
+      {min, max}
+    else
+      App.invalid_option(&build_range/2, message, type)
+    end
   end
 
-  defp verify_range(input, low \\ 0, high \\ 40, string \\ "", atom \\ :lower)
-  defp verify_range("", low, _high, _string, :lower), do: low
-  defp verify_range("", _low, high, _string, :higher), do: high
-  defp verify_range(input, low, high, string, _atom) do
-    int = Calculate.input_to_integer(input)
-    int in (low..high) && int || App.invalid_option(&build_range/1, string)
+  defp validate_range(min, max, low_limit, high_limit) do
+    min <= max &&
+      min in (low_limit..high_limit) &&
+      max in (low_limit..high_limit)
   end
 
   defp validate_total_suit_length(list) do

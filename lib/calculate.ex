@@ -55,7 +55,9 @@ defmodule Bridge.Calculate do
   # FIXME: This function may return either a number or false,
   # is this a good idea?
   def input_to_integer(s) do
-    string = String.trim(s)
-    String.match?(string, ~r/^\d+$/) && String.to_integer(string)
+    String.trim(s)
+    |> fn string ->
+      String.match?(string, ~r/^\d+$/) && String.to_integer(string)
+    end.()
   end
 end
