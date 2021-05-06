@@ -9,46 +9,26 @@ defmodule Bridge.Calculate.Generic do
 
   def start do
     IO.puts ""
-    question()
+    question1()
   end
 
-  defp question do
-    IO.gets("\e[1mBalanced?\e[0m [y/n/(i)rrelevant] ")
+  defp question1 do
+    IO.gets("\e[1;34mBalanced?\e[0m [y/n/(i)rrelevant]\n  ")
     |> String.trim
     |> fn input ->
       case String.downcase(input) do
-        "y" -> question([{:simple, &Hand.balanced?/1}])
-        "n" -> question([{:simple, &Hand.unbalanced?/1}])
-        "i" -> question([{:ignore}])
-        "" -> question([{:ignore}])
-        _ -> App.invalid_option(&question/0)
+        "y" -> question2([{:simple, &Hand.balanced?/1}])
+        "n" -> question2([{:simple, &Hand.unbalanced?/1}])
+        "i" -> question2([{:ignore}])
+        "" -> question2([{:ignore}])
+        _ -> App.invalid_option(&question1/0)
       end
     end.()
   end
 
-  defp question(args) when length(args) == 1 do
-    input = IO.gets("\e[1mAt least how many points\e[0m (hcp)? ")
-    hcp = (input == "\n") && 0 || Helpers.input_to_integer(input)
-
-    if hcp in (0..40) do
-      question([{:min, &Hand.hcp/1, hcp} | args])
-    else
-      IO.puts("\e[93mInvalid amount of hcp\e[0m")
-      question(args)
-    end
-  end
-
-  defp question(args) when length(args) == 2 do
-    input = IO.gets("\e[1mAt most how many points\e[0m (hcp)? ")
-    hcp = (input == "\n") && 40 || Helpers.input_to_integer(input)
-
-    minimun_hcp = elem(hd(args), 2)
-    if hcp in (minimun_hcp..40) do
-      finish([{:max, &Hand.hcp/1, hcp} | args])
-    else
-      IO.puts("\e[93mInvalid amount of hcp\e[0m")
-      question(args)
-    end
+  defp question2(args) do
+    {min, max} = Helpers.build_range("High Card Points\e[0m (hcp)", :hcp)
+    finish([{:range, &Hand.hcp/1, min, max} | args])
   end
 
   defp finish(args) do
