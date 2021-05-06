@@ -4,8 +4,9 @@ defmodule Bridge.App do
   user input and output flow.
   """
 
-  @generic 1
-  @exit 0
+  @generic "1"
+  @suit_length "2"
+  @exit "0"
 
   def start do
     IEx.Helpers.clear
@@ -18,16 +19,18 @@ defmodule Bridge.App do
   def menu do
     IO.puts("\n\e[0mType a number for each of the following options:")
     IO.puts("\e[32m[#{@generic}] Calculate with generic options")
+    IO.puts("\e[32m[#{@suit_length}] Calculate with suit length options")
     IO.puts("\e[93m[#{@exit}] Exit\e[0m\n")
     IO.gets("»» ") |> String.trim |> menu()
   end
 
-  def menu("0"), do: IO.puts("\n\e[91;1mThank you for using my app! (:\e[0m\n")
-
-  def menu("1"), do: Bridge.Calculate.Generic.start() && menu()
-
+  def menu(@generic), do: Bridge.Calculate.Generic.start() && menu()
+  def menu(@suit_length), do: Bridge.Calculate.SuitLength.start() && menu()
+  def menu(@exit), do: IO.puts "\n\e[91;1mThank you for using my app! (:\e[0m\n"
   def menu(_), do: invalid_option(&menu/0)
 
   def invalid_option(function),
     do: IO.puts("\e[93mInvalid option\e[0m") && function.()
+  def invalid_option(function, v1, v2),
+    do: IO.puts("\e[93mInvalid option\e[0m") && function.(v1, v2)
 end
