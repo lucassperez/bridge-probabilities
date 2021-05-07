@@ -21,8 +21,10 @@ defmodule Bridge.Suit do
   def to_s([]), do: "--"
   def to_s(suit), do: to_s(suit, "")
   defp to_s([], acc), do: acc
+
   defp to_s([head | tail], ""),
     do: to_s(tail, "#{get_card_string(head)}")
+
   defp to_s([head | tail], acc),
     do: to_s(tail, "#{acc} #{get_card_string(head)}")
 
@@ -44,9 +46,9 @@ defmodule Bridge.Suit do
   """
   def hcp(suit) do
     suit
-    |> Enum.reduce(0, fn (card, acc) ->
+    |> Enum.reduce(0, fn card, acc ->
       card_value = div(card, 10)
-      card_value > 10 && rem(card_value, 10) + acc || acc
+      (card_value > 10 && rem(card_value, 10) + acc) || acc
     end)
   end
 end

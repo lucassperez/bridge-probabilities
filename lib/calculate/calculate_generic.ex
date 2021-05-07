@@ -5,25 +5,26 @@ defmodule Bridge.Calculate.Generic do
   module.
   """
 
-  alias Bridge.{App, Calculate, Hand, Calculate.Helpers}
+  alias Bridge.Calculate.Helpers
+  alias Bridge.{App, Calculate, Hand}
 
   def start do
-    IO.puts ""
+    IO.puts("")
     question1()
   end
 
   defp question1 do
     IO.gets("\e[1;34mBalanced?\e[0m [y/n/(i)rrelevant]\n  ")
-    |> String.trim
-    |> fn input ->
-      case String.downcase(input) do
-        "y" -> question2([{:simple, &Hand.balanced?/1}])
-        "n" -> question2([{:simple, &Hand.unbalanced?/1}])
-        "i" -> question2([{:ignore}])
-        "" -> question2([{:ignore}])
-        _ -> App.invalid_option(&question1/0)
-      end
-    end.()
+    |> String.trim()
+    |> (fn input ->
+          case String.downcase(input) do
+            "y" -> question2([{:simple, &Hand.balanced?/1}])
+            "n" -> question2([{:simple, &Hand.unbalanced?/1}])
+            "i" -> question2([{:ignore}])
+            "" -> question2([{:ignore}])
+            _ -> App.invalid_option(&question1/0)
+          end
+        end).()
   end
 
   defp question2(args) do

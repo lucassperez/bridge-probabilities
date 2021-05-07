@@ -3,10 +3,13 @@ defmodule BridgeSuitTest do
   doctest Bridge.Suit
 
   setup do
-    {:ok, %{
-      club_suit: [140, 130, 110, 90, 70, 20], #AKJ972
-      diamond_suit: [91, 71, 31] #973
-    }}
+    {:ok,
+     %{
+       # AKJ972
+       club_suit: [140, 130, 110, 90, 70, 20],
+       # 973
+       diamond_suit: [91, 71, 31]
+     }}
   end
 
   describe "#to_s" do
@@ -25,7 +28,7 @@ defmodule BridgeSuitTest do
 
   describe "#hcp" do
     test "it returns correct sum of points of a suit with honours",
-      %{club_suit: suit} do
+         %{club_suit: suit} do
       # suit = [140, 130, 110, 90, 70, 20]
 
       assert Bridge.Suit.hcp(suit) === 8
