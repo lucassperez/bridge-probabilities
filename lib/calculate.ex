@@ -6,7 +6,7 @@ defmodule Bridge.Calculate do
   implementation itself.
   """
 
-  alias Bridge.Hand
+  alias Bridge.{Hand, Calculate.Helpers}
 
   def calculate(n, verified, total, _args, last_hand \\ [])
 
@@ -49,15 +49,6 @@ defmodule Bridge.Calculate do
   defp percentage(verified, total), do: verified / total * 100 |> Float.round(3)
 
   defp to_integer_or_default(s, default \\ 1000) do
-    input_to_integer(s) || default
-  end
-
-  # FIXME: This function may return either a number or false,
-  # is this a good idea?
-  def input_to_integer(s) do
-    String.trim(s)
-    |> fn string ->
-      String.match?(string, ~r/^\d+$/) && String.to_integer(string)
-    end.()
+    Helpers.input_to_integer(s) || default
   end
 end
