@@ -23,22 +23,27 @@ defmodule Bridge.Hand do
   """
   def generate_random do
     hand = [[], [], [], []]
-    _list_of_cards = Enum.take_random(0..51, 13)
-    |> Enum.map(fn number ->
-      suit = div(number, 13)
-      value = rem(number, 13) + 2
-      value * 10 + suit
-    end)
-    |> sort_list_of_cards(hand)
-    |> Enum.map(&(Enum.sort(&1, :desc)))
-    |> Enum.reverse
+
+    _list_of_cards =
+      Enum.take_random(0..51, 13)
+      |> Enum.map(fn number ->
+        suit = div(number, 13)
+        value = rem(number, 13) + 2
+        value * 10 + suit
+      end)
+      |> sort_list_of_cards(hand)
+      |> Enum.map(&Enum.sort(&1, :desc))
+      |> Enum.reverse()
   end
 
   defp sort_list_of_cards([], hand), do: hand
+
   defp sort_list_of_cards([head | tail] = _list_of_cards, hand) do
     suit_index = rem(head, 10)
+
     sort_list_of_cards(
-      tail, List.update_at(hand, suit_index, fn suit -> [head  | suit] end)
+      tail,
+      List.update_at(hand, suit_index, fn suit -> [head | suit] end)
     )
   end
 
@@ -56,12 +61,12 @@ defmodule Bridge.Hand do
   """
   def to_s(hand) do
     hand
-    |> Enum.with_index
-    |> Enum.map(fn ({suit, index}) -> {Suit.to_s(suit), index} end)
-    |> Enum.reduce("", fn ({suit, index}, acc) ->
-      "#{acc}\n#{@suits_string[3-index]}: #{suit}"
+    |> Enum.with_index()
+    |> Enum.map(fn {suit, index} -> {Suit.to_s(suit), index} end)
+    |> Enum.reduce("", fn {suit, index}, acc ->
+      "#{acc}\n#{@suits_string[3 - index]}: #{suit}"
     end)
-    |> String.trim
+    |> String.trim()
   end
 
   @doc """
@@ -77,9 +82,9 @@ defmodule Bridge.Hand do
   """
   def shape(hand) do
     hand
-    |> Enum.map(&length &1)
+    |> Enum.map(&length/1)
     |> Enum.sort(:desc)
-    |> Enum.join
+    |> Enum.join()
   end
 
   @doc """
@@ -94,8 +99,8 @@ defmodule Bridge.Hand do
   """
   def true_shape(hand) do
     hand
-    |> Enum.map(&length &1)
-    |> Enum.join
+    |> Enum.map(&length/1)
+    |> Enum.join()
   end
 
   @doc """
@@ -135,7 +140,7 @@ defmodule Bridge.Hand do
   """
   def hcp(hand) do
     hand
-    |> Enum.reduce(0, fn (suit, acc) -> Suit.hcp(suit) + acc end)
+    |> Enum.reduce(0, fn suit, acc -> Suit.hcp(suit) + acc end)
   end
 
   @doc """
@@ -147,7 +152,7 @@ defmodule Bridge.Hand do
   iex> Bridge.Hand.spades([[], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 30, 20]])
   0
   """
-  def spades(hand), do: hand |> Enum.at(0) |> length
+  def spades(hand), do: hand |> Enum.at(0) |> length()
 
   @doc """
   ## (List) -> Integer
@@ -158,7 +163,7 @@ defmodule Bridge.Hand do
   iex> Bridge.Hand.hearts([[], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 30, 20]])
   3
   """
-  def hearts(hand), do: hand |> Enum.at(1) |> length
+  def hearts(hand), do: hand |> Enum.at(1) |> length()
 
   @doc """
   ## (List) -> Integer
@@ -169,7 +174,7 @@ defmodule Bridge.Hand do
   iex> Bridge.Hand.diamonds([[], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 30, 20]])
   4
   """
-  def diamonds(hand), do: hand |> Enum.at(2) |> length
+  def diamonds(hand), do: hand |> Enum.at(2) |> length()
 
   @doc """
   ## (List) -> Integer
@@ -180,5 +185,5 @@ defmodule Bridge.Hand do
   iex> Bridge.Hand.clubs([[], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 30, 20]])
   6
   """
-  def clubs(hand), do: hand |> Enum.at(3) |> length
+  def clubs(hand), do: hand |> Enum.at(3) |> length()
 end

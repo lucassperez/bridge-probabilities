@@ -6,10 +6,11 @@ defmodule BridgeHandTest do
     test "it returns a valid hand one hundred times" do
       Enum.map(1..100, fn _ ->
         hand = Bridge.Hand.generate_random()
-        n_cards = Enum.reduce(hand, 0, fn(suit, acc) -> length(suit) + acc end)
+        n_cards = Enum.reduce(hand, 0, fn suit, acc -> length(suit) + acc end)
 
         assert length(hand) === 4
         assert n_cards === 13
+
         Enum.map(hand, fn suit ->
           assert Enum.uniq(suit) == suit
         end)
@@ -23,8 +24,9 @@ defmodule BridgeHandTest do
         [93, 83, 23],
         [142, 132, 102, 22],
         [131, 71],
-        [130, 120, 110, 100],
+        [130, 120, 110, 100]
       ]
+
       string = "S: 9 8 2\nH: A K T 2\nD: K 7\nC: K Q J T"
 
       assert Bridge.Hand.to_s(hand) == string
