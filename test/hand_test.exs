@@ -141,4 +141,17 @@ defmodule BridgeHandTest do
       assert Bridge.Hand.clubs(hand) === 5
     end
   end
+
+  describe "#five_major?" do
+    test "it returns true if hand has any 5 or more cards in a major and" <>
+         "false otherwise" do
+      major1 = [[143, 93, 83, 73, 23], [], [81, 71, 41, 31], [70, 60, 30, 20]]
+      major2 = [[], [142, 92, 82, 72, 52, 22], [81, 71, 41, 31], [60, 30, 20]]
+      no_major = [[93], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 20]]
+
+      assert Bridge.Hand.five_major?(major1)
+      assert Bridge.Hand.five_major?(major2)
+      refute Bridge.Hand.five_major?(no_major)
+    end
+  end
 end

@@ -186,4 +186,15 @@ defmodule Bridge.Hand do
   6
   """
   def clubs(hand), do: hand |> Enum.at(3) |> length()
+
+  @doc """
+  ## (List) -> Bool
+  Returns true if a hand has at least five cards in any major, false otherwise
+
+  iex> Bridge.Hand.five_major?([[], [92, 82, 22], [101, 91, 81, 21], [90, 80, 70, 60, 30, 20]])
+  false
+  """
+  def five_major?(hand) do
+    hearts(hand) >= 5 || spades(hand) >= 5
+  end
 end
