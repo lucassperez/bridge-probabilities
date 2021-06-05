@@ -4,10 +4,11 @@ defmodule Bridge.App do
   user input and output flow.
   """
 
-  alias Bridge.Calculate.{Generic, SuitLength}
+  alias Bridge.Calculate.{Generic, SuitLength, PreSet}
 
   @generic "1"
   @suit_length "2"
+  @pre_set "4"
   @exit "0"
 
   def start do
@@ -22,12 +23,14 @@ defmodule Bridge.App do
     IO.puts("\n\e[0mType a number for each of the following options:")
     IO.puts("\e[32m[#{@generic}] Calculate with generic options")
     IO.puts("\e[32m[#{@suit_length}] Calculate with suit length options")
+    IO.puts("\e[32m[#{@pre_set}] Calculate with pre set options")
     IO.puts("\e[93m[#{@exit}] Exit\e[0m\n")
     IO.gets("»» ") |> String.trim() |> menu()
   end
 
   def menu(@generic), do: Generic.start() && menu()
   def menu(@suit_length), do: SuitLength.start() && menu()
+  def menu(@pre_set), do: PreSet.start() && menu()
 
   def menu(@exit),
     do: IO.puts("\n\e[91;1mThank you for using my app! (:\e[0m\n")

@@ -45,6 +45,7 @@ defmodule Bridge.Calculate do
           {:max, func, value} -> func.(hand) <= value
           {:range, func, min, max} -> func.(hand) in min..max
           {:simple, func} -> func.(hand)
+          {:compare, func1, func2} -> func1.(hand) >= func2.(hand)
           {:ignore} -> true
         end
     end)
